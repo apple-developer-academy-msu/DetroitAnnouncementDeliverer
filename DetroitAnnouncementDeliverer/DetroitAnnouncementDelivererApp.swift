@@ -9,9 +9,22 @@ import SwiftUI
 
 @main
 struct DetroitAnnouncementDelivererApp: App {
+    @UIApplicationDelegateAdaptor private var appDelegate: CustomAppDelegate
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    Task {
+                        let notificationCenter = UNUserNotificationCenter.current()
+                        
+                        do {
+                            try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
+                        } catch {
+                            print("Request authorization error")
+                        }
+                    }
+                }
         }
     }
 }
