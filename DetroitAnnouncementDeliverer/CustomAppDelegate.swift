@@ -23,12 +23,19 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         return true
     }
     
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: any Error
+    ) {
         print(error)
     }
+
     
-    func application(_ application: UIApplication,
-                       didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
         // Once the device is registered for push notifications Apple will send the token to our app and it will be available here.
         // This is also where we will forward the token to our push server
         // If you want to see a string version of your token, you can use the following code to print it out
@@ -49,8 +56,19 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         // Set headers (if needed, for example content type)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        let id: String
+        
+        if let storedId = UserDefaults.standard.string(forKey: "userId") {
+            id = storedId
+        } else {
+            id = UUID().uuidString
+            UserDefaults.standard.set(id, forKey: "userId")
+        }
+                
+        let cohort = UserDefaults.standard.string(forKey: "cohort")
+        
         // Prepare the body data (e.g., device token as JSON)
-        let body: [String: Any] = ["deviceToken": deviceToken, "cohort": "am"]
+        let body: [String: Any] = ["id": id, "deviceToken": deviceToken, "cohort": cohort ?? "am"]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: body, options: [])
             request.httpBody = jsonData

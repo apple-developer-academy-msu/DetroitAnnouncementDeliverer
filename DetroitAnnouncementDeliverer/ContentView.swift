@@ -10,7 +10,8 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @State private var selectedCohort = "am"
+    
+    @AppStorage("cohort") private var cohort = "am"
     
     var body: some View {
         NavigationStack {
@@ -21,7 +22,7 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                Picker("Select a Cohort", selection: $selectedCohort) {
+                Picker("Select a Cohort", selection: $cohort) {
                     Text("AM")
                         .tag("am")
                     Text("PM")
@@ -32,13 +33,7 @@ struct ContentView: View {
                 
                 Button("Register") {
                     Task {
-                        let notificationCenter = UNUserNotificationCenter.current()
-                        
-                        do {
-                            try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
-                        } catch {
-                            print("Request authorization error")
-                        }
+                        await registerForRemoteNotifications()
                     }
                 }
                 .padding()
@@ -46,6 +41,18 @@ struct ContentView: View {
                 Spacer()
             }
             .padding()
+        }
+    }
+    
+    func registerForRemoteNotifications() async {
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        do {
+            try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
+            
+            UIApplication.shared.registerForRemoteNotifications()
+        } catch {
+            print("Request authorization error")
         }
     }
 }
