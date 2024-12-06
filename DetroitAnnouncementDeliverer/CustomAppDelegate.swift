@@ -47,7 +47,7 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     func sendDeviceTokenToServer(deviceToken: String) {
         // Replace with your server's endpoint URL
-        let url = URL(string: "http://localhost:8080/learners")!
+        let url = URL(string: "http://10.121.41.51:8080/learners")!
         
         // Set up the URLRequest
         var request = URLRequest(url: url)
