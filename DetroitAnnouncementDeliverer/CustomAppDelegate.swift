@@ -23,6 +23,10 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         return true
     }
     
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
+        print(error)
+    }
+    
     func application(_ application: UIApplication,
                        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Once the device is registered for push notifications Apple will send the token to our app and it will be available here.
@@ -30,6 +34,46 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         // If you want to see a string version of your token, you can use the following code to print it out
         let stringifiedToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         print("stringifiedToken:", stringifiedToken)
+        sendDeviceTokenToServer(deviceToken: stringifiedToken)
+        
+    }
+    
+    func sendDeviceTokenToServer(deviceToken: String) {
+        // Replace with your server's endpoint URL
+        let url = URL(string: "http://localhost:8080/learners")!
+        
+        // Set up the URLRequest
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // Set headers (if needed, for example content type)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Prepare the body data (e.g., device token as JSON)
+        let body: [String: Any] = ["deviceToken": deviceToken, "cohort": "am"]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: body, options: [])
+            request.httpBody = jsonData
+        } catch {
+            print("Error serializing JSON: \(error)")
+            return
+        }
+        
+        // Send the request using URLSession
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error sending device token: \(error)")
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                print("Device token successfully registered.")
+            } else {
+                print("Failed to register device token with response: \(String(describing: response))")
+            }
+        }
+        
+        task.resume()
     }
 }
 
