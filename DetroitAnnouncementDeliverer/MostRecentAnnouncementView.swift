@@ -9,8 +9,9 @@ import SwiftUI
 
 struct MostRecentAnnouncementView: View {
     @State private var isShowingRegistration = false
-    @AppStorage("mostRecentTitle") var mostRecentTitle = "Welcome to DAD!"
+    @AppStorage("mostRecentDate") var mostRecentDate = ""
     @AppStorage("mostRecentBody") var mostRecentBody = "The most recent announcement you have received will appear here. Make sure you have enabled notifications and registered your device to receive announcements."
+    @AppStorage("mostRecentUrl") var url = ""
     
     var body: some View {
         NavigationStack {
@@ -22,12 +23,25 @@ struct MostRecentAnnouncementView: View {
                 DadView()
                     .padding()
                 
-                Text(mostRecentTitle)
-                    .font(.title)
+                Text(mostRecentDate.isEmpty ? "Welcome to DAD!" : "On \(mostRecentDate) DAD Said ...")
+                    .font(.headline)
                     .padding()
                 
-                Text(mostRecentBody)
-                    .padding()
+                
+                
+                if url.isEmpty == false {
+                    if let url = URL(string: url) {
+                        Link(destination: url) {
+                            Text(mostRecentBody)
+                                .font(.title)
+                                .padding()
+                        }
+                    }
+                } else {
+                    Text(mostRecentBody)
+                        .font(.title)
+                        .padding()
+                }
                 
                 Spacer()
             }

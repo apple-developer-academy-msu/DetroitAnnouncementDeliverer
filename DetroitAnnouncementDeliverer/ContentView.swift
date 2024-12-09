@@ -19,27 +19,7 @@ struct ContentView: View {
         if isFirstTime {
             OnboardingView()
         } else {
-            NavigationStack {
-                VStack {
-                    Text("Detroit Announcement Deliverer")
-                        .font(.largeTitle)
-                        .bold()
-                    
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Register", systemImage: "gear") {
-                            isShowingRegistration = true
-                        }
-                    }
-                }
-                .sheet(isPresented: $isShowingRegistration) {
-                    RegistrationView() {
-                        isShowingRegistration = false
-                    }
-                }
-                .padding()
-            }
+            MostRecentAnnouncementView()
         }
     }
 }

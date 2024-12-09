@@ -15,11 +15,11 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // This is where we register this device to recieve push notifications from Apple
         // All this function does is register the device with APNs, it doesn't set up push notifications by itself
-        application.registerForRemoteNotifications()
-        
-        // Setting the notification delegate
+//        application.registerForRemoteNotifications()
+//        
+//        // Setting the notification delegate
         UNUserNotificationCenter.current().delegate = self
-        
+//        
         return true
     }
     
@@ -101,7 +101,7 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             // Open the URL in Safari or another app
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             completionHandler(.newData)
-                }
+        }
         
         return completionHandler(.noData)
     }
@@ -112,13 +112,22 @@ extension CustomAppDelegate: UNUserNotificationCenterDelegate {
     // This function lets us do something when the user interacts with a notification
     // like log that they clicked it, or navigate to a specific screen
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-            print("Got notification title: ", response.notification.request.content.title)
+        let title = response.notification.request.content.title
+            print("Got notification title: ", title)
         let userInfo = response.notification.request.content.userInfo
-        
+        let userDefaults = UserDefaults.standard
+
         if let urlString = userInfo["url"] as? String, let url = URL(string: urlString) {
             // Open the URL in Safari or another app
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            
+            userDefaults.set(urlString, forKey: "mostRecentUrl")
+        } else {
+            userDefaults.set("", forKey: "mostRecentUrl")
+        }
+        
+        if title != "Device Registration Complete!" {
+            userDefaults.set(response.notification.request.content.subtitle, forKey: "mostRecentBody")
+            userDefaults.set(response.notification.date.formatted(date: .abbreviated, time: .shortened), forKey: "mostRecentDate")
         }
     }
     
