@@ -19,15 +19,13 @@ struct RegistrationView: View {
                 .font(.title)
                 .padding()
             
-            Text("👴")
-                .font(.system(size: 90))
-                .accessibilityHidden(true)
-            
+            DadView()
+
             Text("DAD needs your permission to send notifications to your devices for Academy announcement and resources.")
                 .font(.headline)
                 .foregroundStyle(isShowingLinkToSettings ? .red : .primary)
                 .padding()
-            
+
             Text("Select a Cohort")
             Picker("Select a Cohort", selection: $cohort) {
                 Text("AM")
