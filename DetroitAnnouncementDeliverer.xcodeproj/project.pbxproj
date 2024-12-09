@@ -29,9 +29,22 @@
 		3EF250112CD002970051FE89 /* DetroitAnnouncementDelivererUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DetroitAnnouncementDelivererUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3E7B5CEC2D03AB7000AB42F8 /* Exceptions for "DetroitAnnouncementDeliverer" folder in "DetroitAnnouncementDeliverer" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3EF24FF62CD002960051FE89 /* DetroitAnnouncementDeliverer */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3EF24FF92CD002960051FE89 /* DetroitAnnouncementDeliverer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3E7B5CEC2D03AB7000AB42F8 /* Exceptions for "DetroitAnnouncementDeliverer" folder in "DetroitAnnouncementDeliverer" target */,
+			);
 			path = DetroitAnnouncementDeliverer;
 			sourceTree = "<group>";
 		};
@@ -400,6 +413,7 @@
 				DEVELOPMENT_TEAM = PU4JAM9L7Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DetroitAnnouncementDeliverer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -430,6 +444,7 @@
 				DEVELOPMENT_TEAM = PU4JAM9L7Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DetroitAnnouncementDeliverer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
