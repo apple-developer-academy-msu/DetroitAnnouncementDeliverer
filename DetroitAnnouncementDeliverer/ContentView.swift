@@ -16,26 +16,31 @@ struct ContentView: View {
     @State private var isShowingRegistration = false
     
     var body: some View {
-        NavigationStack {
-            if isFirstTime {
-                OnboardingView()
-            } else {
+        if isFirstTime {
+            OnboardingView()
+        } else {
+            NavigationStack {
                 VStack {
                     Text("Detroit Announcement Deliverer")
                         .font(.largeTitle)
                         .bold()
                     
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Register", systemImage: "gear") {
+                            isShowingRegistration = true
+                        }
+                    }
+                }
+                .sheet(isPresented: $isShowingRegistration) {
+                    RegistrationView() {
+                        isShowingRegistration = false
+                    }
+                }
+                .padding()
             }
-            
         }
-        .sheet(isPresented: $isShowingRegistration) {
-            RegistrationView() {
-                isShowingRegistration = false
-            }
-        }
-        .padding()
-        
     }
 }
 
