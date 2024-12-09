@@ -47,7 +47,7 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     func sendDeviceTokenToServer(deviceToken: String) {
         // Replace with your server's endpoint URL
-        let url = URL(string: "http://10.121.41.51:8080/learners")!
+        let url = URL(string: "http://10.121.53.206:8080/learners")!
         
         // Set up the URLRequest
         var request = URLRequest(url: url)
@@ -93,6 +93,19 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         
         task.resume()
     }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("received remote notification")
+        
+        if let urlString = userInfo["url"] as? String, let url = URL(string: urlString) {
+            // Open the URL in Safari or another app
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            completionHandler(.newData)
+                }
+        
+        return completionHandler(.noData)
+    }
+    
 }
 
 extension CustomAppDelegate: UNUserNotificationCenterDelegate {
@@ -100,6 +113,13 @@ extension CustomAppDelegate: UNUserNotificationCenterDelegate {
     // like log that they clicked it, or navigate to a specific screen
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
             print("Got notification title: ", response.notification.request.content.title)
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let urlString = userInfo["url"] as? String, let url = URL(string: urlString) {
+            // Open the URL in Safari or another app
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
+        }
     }
     
     // This function allows us to view notifications in the app even with it in the foreground
