@@ -13,7 +13,18 @@ struct RegistrationView: View {
 
     var body: some View {
         VStack {
-            Spacer()
+            Text("Set Up")
+                .font(.title)
+                .padding()
+            
+            Text("👴")
+                .font(.system(size: 90))
+                .accessibilityHidden(true)
+                        
+            Text("DAD needs your permission to send notifications to your devices for Academy announcement and resources.")
+                .font(.headline)
+                .padding()
+
             Text("Select a Cohort")
             Picker("Select a Cohort", selection: $cohort) {
                 Text("AM")
