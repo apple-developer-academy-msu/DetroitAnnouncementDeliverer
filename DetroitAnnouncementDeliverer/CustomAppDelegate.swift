@@ -9,6 +9,7 @@ import SwiftUI
 import UserNotifications
 
 class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
+
     // This gives us access to the methods from our main app code inside the app delegate
     var app: DetroitAnnouncementDelivererApp?
     
@@ -18,7 +19,7 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
 //        application.registerForRemoteNotifications()
 //        
 //        // Setting the notification delegate
-        UNUserNotificationCenter.current().delegate = self
+//        UNUserNotificationCenter.current().delegate = self
 //        
         return true
     }
@@ -108,26 +109,32 @@ class CustomAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
 }
 
-extension CustomAppDelegate: UNUserNotificationCenterDelegate {
+
+
+import Combine
+
+class NotificationManager: NSObject, ObservableObject {
+    @Published var recievedNotification: UNNotification?
+    
+    private var notificationSubject = PassthroughSubject<UNNotification, Never>()
+    
+    // Publisher to observe notifications outside of the delegate methods
+    var notificationPublisher: AnyPublisher<UNNotification, Never> {
+        notificationSubject.eraseToAnyPublisher()
+    }
+    
+    override init() {
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
+    }
+}
+
+extension NotificationManager: UNUserNotificationCenterDelegate {
     // This function lets us do something when the user interacts with a notification
     // like log that they clicked it, or navigate to a specific screen
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        let title = response.notification.request.content.title
-            print("Got notification title: ", title)
-        let userInfo = response.notification.request.content.userInfo
-        let userDefaults = UserDefaults.standard
-
-        if let urlString = userInfo["url"] as? String, let url = URL(string: urlString) {
-            // Open the URL in Safari or another app
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            userDefaults.set(urlString, forKey: "mostRecentUrl")
-        } else {
-            userDefaults.set("", forKey: "mostRecentUrl")
-        }
-        
-        if title != "Device Registration Complete!" {
-            userDefaults.set(response.notification.request.content.subtitle, forKey: "mostRecentBody")
-            userDefaults.set(response.notification.date.formatted(date: .abbreviated, time: .shortened), forKey: "mostRecentDate")
+        await MainActor.run {
+            notificationSubject.send(response.notification)
         }
     }
     
@@ -135,6 +142,10 @@ extension CustomAppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         // These options are the options that will be used when displaying a notification with the app in the foreground
         // for example, we will be able to display a badge on the app a banner alert will appear and we could play a sound
+        await MainActor.run {
+            notificationSubject.send(notification)
+        }
+        
         return [.badge, .banner, .list, .sound]
     }
 }

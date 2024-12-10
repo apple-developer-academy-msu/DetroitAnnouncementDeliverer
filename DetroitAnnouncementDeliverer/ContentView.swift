@@ -10,16 +10,22 @@ import SwiftUI
 
 
 struct ContentView: View {
-    
-    @AppStorage("cohort") private var cohort = "am"
     @AppStorage("isFirstTime") private var isFirstTime = true
-    @State private var isShowingRegistration = false
-    
+    @AppStorage("mostRecentDate") private var mostRecentDate = "true"
+    @AppStorage("mostRecentBody") private var mostRecentBody = MostRecentAnnouncementView.ViewModel.defaultHeadline
+    @AppStorage("mostRecentUrl") private var mostRecentUrl = ""
+
     var body: some View {
         if isFirstTime {
             OnboardingView()
         } else {
-            MostRecentAnnouncementView()
+            MostRecentAnnouncementView(
+                vm: MostRecentAnnouncementView.ViewModel(
+                    mostRecentDate: mostRecentDate,
+                    mostRecentBody: mostRecentBody,
+                    mostRecentUrl: mostRecentUrl
+                )
+            )
         }
     }
 }
