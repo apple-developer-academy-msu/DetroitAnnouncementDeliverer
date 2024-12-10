@@ -10,12 +10,12 @@ import SwiftUI
 struct MostRecentAnnouncementView: View {
     @State private var isShowingRegistration = false
     @AppStorage("mostRecentDate") var mostRecentDate = ""
-    @AppStorage("mostRecentBody") var mostRecentBody = "The most recent announcement you have received will appear here. Make sure you have enabled notifications and registered your device to receive announcements."
+    @AppStorage("mostRecentBody") var mostRecentBody = "Well, well, well, looks like you've got an announcement waiting for you! It'll pop up right here, so keep your eyes peeled and your notifications on—because just like dad's famous socks collection, you don't want to miss it! Oh, and make sure your device is registered, or you might be left in the dark—and trust me, nobody wants that! Stay tuned, champ!"
     @AppStorage("mostRecentUrl") var url = ""
     
     var body: some View {
         NavigationStack {
-            VStack {
+            ScrollView {
                 Text("Detroit Announcement Deliverer")
                     .font(.largeTitle)
                     .bold()
