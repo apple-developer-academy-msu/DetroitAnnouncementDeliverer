@@ -17,8 +17,10 @@ struct MostRecentAnnouncementView: View {
             ScrollView {
                 AppTitleView()
                 
-                DadView()
-                    .padding()
+                Button(action: { vm.isShowingDadSelection.toggle()}) {
+                    DadView()
+                        .padding()
+                }
                 
                 Text(vm.headline)
                     .font(.headline)
@@ -37,6 +39,11 @@ struct MostRecentAnnouncementView: View {
                     Button("Register", systemImage: "gear") {
                         vm.isShowingRegistration = true
                     }
+                }
+            }
+            .sheet(isPresented: $vm.isShowingDadSelection) {
+                DadSelectionView() {
+                    vm.isShowingDadSelection.toggle()
                 }
             }
             .sheet(isPresented: $vm.isShowingRegistration) {

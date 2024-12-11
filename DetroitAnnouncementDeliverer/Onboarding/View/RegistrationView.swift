@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RegistrationView: View {
     @AppStorage("isFirstTime") private var isFirstTime = true
-    @AppStorage("cohort") private var cohort = "am"
+    @AppStorage("cohort") private var cohort = Cohort.am.rawValue
     @State private var vm: ViewModel
     
     init(onRegistraion: @escaping () -> Void) {
@@ -17,7 +17,7 @@ struct RegistrationView: View {
     }
     
     var body: some View {
-        VStack {
+        ScrollView {
             Text("Set Up")
                 .font(.title)
                 .padding()
@@ -31,12 +31,10 @@ struct RegistrationView: View {
 
             Text("Select a Cohort")
             Picker("Select a Cohort", selection: $cohort) {
-                Text("AM")
-                    .tag("am")
-                Text("PM")
-                    .tag("pm")
-                Text("Alumni")
-                    .tag("alumni")
+                ForEach(Cohort.allCases) { cohort in
+                    Text(cohort.label)
+                        .tag(cohort.rawValue)
+                }
             }
             .pickerStyle(.segmented)
             .padding()

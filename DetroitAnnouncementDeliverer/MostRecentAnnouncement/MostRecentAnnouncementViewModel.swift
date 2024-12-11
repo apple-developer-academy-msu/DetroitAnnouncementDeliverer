@@ -57,6 +57,7 @@ extension MostRecentAnnouncementView {
         }
         
         var isShowingRegistration = false
+        var isShowingDadSelection = false
         
         var headline: String {
             mostRecentDate.isEmpty ? "Welcome to DAD!" : "On \(mostRecentDate) DAD Said ..."
