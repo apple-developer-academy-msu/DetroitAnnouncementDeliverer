@@ -10,15 +10,10 @@ import SwiftUI
 struct RegistrationView: View {
     @AppStorage("isFirstTime") private var isFirstTime = true
     @AppStorage("cohort") private var cohort = "am"
-    @State private var isShowingLinkToSettings = false
-    let onRegistraion: () -> Void
+    @State private var vm: ViewModel
     
-    var instructions: String {
-        if isShowingLinkToSettings {
-            "Now listen, Sport. DAD needs your permission to send notifications to your devices for Academy announcements and resources. And yes, I mean DAD. Now, listen up—this is important! Think of it as me making sure you don’t miss out on anything important, with a little extra care and a dash of dad wisdom. Go ahead and head to your settings and turn on notifications. I’m looking out for you, and I promise it’ll be worth it."
-        } else {
-            "DAD needs your permission to send notifications to your devices for Academy announcements and resources. Yep, you heard that right—DAD. Think of it like having a personal assistant who’s always got your back, but with extra love, a sprinkle of dad jokes, and a whole lot of helpful reminders and resources. Click 'Allow' and let’s stay connected!"
-        }
+    init(onRegistraion: @escaping () -> Void) {
+        self.vm = ViewModel(onRegistraion: onRegistraion)
     }
     
     var body: some View {
@@ -29,9 +24,9 @@ struct RegistrationView: View {
             
             DadView()
 
-            Text(instructions)
+            Text(vm.instructions)
                 .font(.headline)
-                .foregroundStyle(isShowingLinkToSettings ? .red : .primary)
+                .foregroundStyle(vm.isShowingLinkToSettings ? .red : .primary)
                 .padding()
 
             Text("Select a Cohort")
@@ -48,79 +43,40 @@ struct RegistrationView: View {
             
             Button("Register") {
                 Task {
-                    await registerForRemoteNotifications()
-                    onRegistraion()
+                    await vm.register()
                 }
             }
-            .disabled(isShowingLinkToSettings)
+            .disabled(vm.isShowingLinkToSettings)
             .buttonStyle(.primary)
-            .opacity(isShowingLinkToSettings ? 0.5 : 1.0)
+            .opacity(vm.isShowingLinkToSettings ? 0.5 : 1.0)
             .foregroundStyle(.background)
 
             .padding()
             
-            if isShowingLinkToSettings {
+            if vm.isShowingLinkToSettings {
                 Button("Open App Settings to Turn On Notifications") {
-                    openAppSettings()
+                    vm.openAppSettings()
                 }
                 .padding()
             }
             
             Spacer()
         }
-        .onAppear {
-            if !isFirstTime {
-                withAnimation {
-                    checkNotificationAuthorization()
-                }
-            }
-        }
+        .onAppear(perform: checkAuthorization)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            if !isFirstTime {
-                withAnimation {
-                    checkNotificationAuthorization()
-                }
-            }
+            checkAuthorization()
         }
     }
     
-    func registerForRemoteNotifications() async {
-        let notificationCenter = UNUserNotificationCenter.current()
-        
-        do {
-            try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
-            UIApplication.shared.registerForRemoteNotifications()
-        } catch {
-            print("Request authorization error")
-        }
-    }
-    
-    func checkNotificationAuthorization() {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            DispatchQueue.main.async {
-                switch settings.authorizationStatus {
-                case .notDetermined, .denied:
-                    isShowingLinkToSettings = true
-                case .authorized, .provisional, .ephemeral:
-                    isShowingLinkToSettings = false
-                @unknown default:
-                    isShowingLinkToSettings = true
-                }
-            }
-        }
-    }
-    
-    func openAppSettings() {
-        if let appSettingsURL = URL(string: UIApplication.openSettingsURLString) {
-            if UIApplication.shared.canOpenURL(appSettingsURL) {
-                UIApplication.shared.open(appSettingsURL)
+    fileprivate func checkAuthorization() {
+        if !isFirstTime {
+            withAnimation {
+                vm.checkNotificationAuthorization()
             }
         }
     }
 }
 
 #Preview {
-    RegistrationView() {
-        
-    }
+    RegistrationView() {}
 }

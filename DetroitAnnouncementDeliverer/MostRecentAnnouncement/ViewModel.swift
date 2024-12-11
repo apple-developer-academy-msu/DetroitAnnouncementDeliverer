@@ -9,6 +9,7 @@ import SwiftUI
 import UserNotifications
 
 extension MostRecentAnnouncementView {
+    
     @Observable
     class ViewModel {
         var mostRecentDate: String {
@@ -35,7 +36,7 @@ extension MostRecentAnnouncementView {
                 }
             }
         
-        var mostRecentUrl: String {
+        private var mostRecentUrl: String {
                 get {
                     access(keyPath: \.mostRecentUrl)
                     return UserDefaults.standard.string(forKey: "mostRecentUrl") ?? ""
@@ -47,14 +48,6 @@ extension MostRecentAnnouncementView {
                 }
             }
         
-        var isShowingRegistration = false
-        
-        var headline: String {
-            mostRecentDate.isEmpty ? "Welcome to DAD!" : "On \(mostRecentDate) DAD Said ..."
-        }
-        
-        private let defaultHeadline = "Well, howdy sport! Your most recent message will be displayed here, so keep your eyes peeled! Just like DAD's famous sock collection, you won't want to miss it! Oh, and make sure your device is registered, or you might be left in the dark—and trust me, nobody wants that! Stay tuned, champ!"
-        
         var storedURL: URL? {
             if mostRecentUrl.isEmpty == false {
                 return URL(string: mostRecentUrl)
@@ -63,20 +56,28 @@ extension MostRecentAnnouncementView {
             }
         }
         
+        var isShowingRegistration = false
+        
+        var headline: String {
+            mostRecentDate.isEmpty ? "Welcome to DAD!" : "On \(mostRecentDate) DAD Said ..."
+        }
+        
+        private let defaultHeadline = "Well, howdy sport! Your most recent message will be displayed here, so keep your eyes peeled! Just like DAD's famous sock collection, you won't want to miss it! Oh, and make sure your device is registered, or you might be left in the dark—and trust me, nobody wants that! Stay tuned, champ!"
+        
         func handle(_ notification: UNNotification) {
             let title = notification.request.content.title
                 print("Got notification title: ", title)
             let userInfo = notification.request.content.userInfo
 
             if let urlString = userInfo["url"] as? String, let url = URL(string: urlString) {
-                // Open the URL in Safari or another app
                 DispatchQueue.main.async {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
+                
                 mostRecentUrl = urlString
             } else {
                 mostRecentUrl = ""
-                }
+            }
             
             if title != "Device Registration Complete!" {
                 mostRecentBody = notification.request.content.subtitle
