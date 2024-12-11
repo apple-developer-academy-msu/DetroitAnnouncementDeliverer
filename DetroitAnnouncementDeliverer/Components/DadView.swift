@@ -11,8 +11,12 @@ struct DadView: View {
     @AppStorage("selectedDadIndex") var selectedDadIndex = 0
     @AppStorage("isOld") var isOld = false
 
+    var emoji: String {
+        isOld ? Dad.list[selectedDadIndex].oldEmoji : Dad.list[selectedDadIndex].youngEmoji
+    }
+    
     var body: some View {
-        Text(isOld ? Dad.list[selectedDadIndex].oldEmoji : Dad.list[selectedDadIndex].youngEmoji)
+        Text(emoji)
             .font(.system(size: 90))
             .accessibilityHidden(true)
     }
