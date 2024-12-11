@@ -15,9 +15,7 @@ struct MostRecentAnnouncementView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                Text("Detroit Announcement Deliverer")
-                    .font(.largeTitle)
-                    .bold()
+                AppTitleView()
                 
                 DadView()
                     .padding()

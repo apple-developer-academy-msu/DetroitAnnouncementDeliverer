@@ -62,9 +62,7 @@ struct OverviewView: View {
     
     var body: some View {
         VStack {
-            Text("Detroit Announcement Deliverer")
-                .font(.largeTitle)
-                .bold()
+            AppTitleView()
                 .padding(.bottom)
             
             ScrollView {
