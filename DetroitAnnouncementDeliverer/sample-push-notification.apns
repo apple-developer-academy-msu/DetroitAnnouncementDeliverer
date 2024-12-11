@@ -1,9 +1,0 @@
-{
-    "Simulator Target Bundle": "com.tomphillipsmusic.DetroitAnnouncementDeliverer",
-    "aps": {
-        "alert": {
-            "title": "This is a test notification title",
-            "body": "This is a test notification body"
-        }
-    }
-}
