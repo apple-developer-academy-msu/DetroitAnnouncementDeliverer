@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-let dads = [
-    Dad(youngEmoji: "👨", oldEmoji: "👴"),
-    Dad(youngEmoji: "👨🏻", oldEmoji: "👴🏻"),
-    Dad(youngEmoji: "👨🏼", oldEmoji: "👴🏻"),
-    Dad(youngEmoji: "👨🏽", oldEmoji: "👴🏽"),
-    Dad(youngEmoji: "👨🏾", oldEmoji: "👴🏾"),
-    Dad(youngEmoji: "👨🏿", oldEmoji: "👴🏿")
-]
-
 struct DadSelectionView: View {
     @AppStorage("selectedDadIndex") var selectedDadIndex = 0
     @AppStorage("isOld") var isOld = false
@@ -45,8 +36,8 @@ struct DadSelectionView: View {
             Text("Appearance")
                 .font(.headline)
             Picker("Select Your DAD", selection: $selectedDadIndex) {
-                ForEach(0..<dads.count) { index in
-                    Text(isOld ? dads[index].oldEmoji : dads[index].youngEmoji)
+                ForEach(0..<Dad.list.count) { index in
+                    Text(isOld ? Dad.list[index].oldEmoji : Dad.list[index].youngEmoji)
                         .tag(index)
                 }
             }

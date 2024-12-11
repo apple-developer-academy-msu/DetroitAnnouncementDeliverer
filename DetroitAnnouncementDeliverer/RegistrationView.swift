@@ -93,7 +93,6 @@ struct RegistrationView: View {
         
         do {
             try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
-            
             UIApplication.shared.registerForRemoteNotifications()
         } catch {
             print("Request authorization error")

@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-struct Dad: Identifiable {
-    let id = UUID()
-    let youngEmoji: String
-    let oldEmoji: String
-    
-    init(youngEmoji: String, oldEmoji: String) {
-        self.youngEmoji = youngEmoji
-        self.oldEmoji = oldEmoji
-    }
-}
-
 struct OnboardingView: View {
     @AppStorage("isFirstTime") private var isFirstTime = true
     @State private var selectedTab = 0
