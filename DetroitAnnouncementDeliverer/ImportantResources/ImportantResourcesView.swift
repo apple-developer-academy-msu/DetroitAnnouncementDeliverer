@@ -9,7 +9,13 @@ import SwiftUI
 
 struct ImportantResourcesView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List {
+                ContentUnavailableView("No saved resources", systemImage: "book.pages", description: Text("Resources mentors have marked as important will be persisted here."))
+            }
+            .navigationTitle("Saved Resources")
+            .navigationBarTitleTextColor(.accent)
+        }
     }
 }
 
