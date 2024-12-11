@@ -15,11 +15,11 @@ extension MostRecentAnnouncementView {
         var mostRecentDate: String {
                 get {
                     access(keyPath: \.mostRecentDate)
-                    return UserDefaults.standard.string(forKey: "mostRecentDate") ?? ""
+                    return UserDefaults.standard.string(forKey: UserDefaults.mostRecentDate) ?? ""
                 }
                 set {
                     withMutation(keyPath: \.mostRecentDate) {
-                        UserDefaults.standard.setValue(newValue, forKey: "mostRecentDate")
+                        UserDefaults.standard.setValue(newValue, forKey: UserDefaults.mostRecentDate)
                     }
                 }
             }
@@ -27,11 +27,11 @@ extension MostRecentAnnouncementView {
         var mostRecentBody: String {
                 get {
                     access(keyPath: \.mostRecentBody)
-                    return UserDefaults.standard.string(forKey: "mostRecentBody") ?? defaultHeadline
+                    return UserDefaults.standard.string(forKey: UserDefaults.mostRecentBody) ?? defaultHeadline
                 }
                 set {
                     withMutation(keyPath: \.mostRecentBody) {
-                        UserDefaults.standard.setValue(newValue, forKey: "mostRecentBody")
+                        UserDefaults.standard.setValue(newValue, forKey: UserDefaults.mostRecentBody)
                     }
                 }
             }
@@ -39,11 +39,11 @@ extension MostRecentAnnouncementView {
         private var mostRecentUrl: String {
                 get {
                     access(keyPath: \.mostRecentUrl)
-                    return UserDefaults.standard.string(forKey: "mostRecentUrl") ?? ""
+                    return UserDefaults.standard.string(forKey: UserDefaults.mostRecentUrl) ?? ""
                 }
                 set {
                     withMutation(keyPath: \.mostRecentUrl) {
-                        UserDefaults.standard.setValue(newValue, forKey: "mostRecentUrl")
+                        UserDefaults.standard.setValue(newValue, forKey: UserDefaults.mostRecentUrl)
                     }
                 }
             }

@@ -42,16 +42,16 @@ class VaporRegistrationService: RegistrationService {
     
     private func createBody(with deviceToken: String) -> [String: Any] {
         let id = userID()
-        let cohort = UserDefaults.standard.string(forKey: "cohort")
+        let cohort = UserDefaults.standard.string(forKey: UserDefaults.cohort)
         return ["id": id, "deviceToken": deviceToken, "cohort": cohort ?? "am"]
     }
     
     private func userID() -> String {
-        if let storedId = UserDefaults.standard.string(forKey: "userId") {
+        if let storedId = UserDefaults.standard.string(forKey: UserDefaults.userId) {
             return storedId
         } else {
             let newID = UUID().uuidString
-            UserDefaults.standard.set(newID, forKey: "userId")
+            UserDefaults.standard.set(newID, forKey: UserDefaults.userId)
             return newID
         }
     }
