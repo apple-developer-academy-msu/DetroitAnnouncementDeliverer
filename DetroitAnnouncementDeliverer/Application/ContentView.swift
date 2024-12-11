@@ -16,7 +16,15 @@ struct ContentView: View {
         if isFirstTime {
             OnboardingView()
         } else {
-            MostRecentAnnouncementView()
+            TabView {
+                Tab("Most Recent", systemImage: "bell.badge") {
+                    MostRecentAnnouncementView()
+                }
+                
+                Tab("Important Resources", systemImage: "sharedwithyou") {
+                    ImportantResourcesView()
+                }
+            }
         }
     }
 }
