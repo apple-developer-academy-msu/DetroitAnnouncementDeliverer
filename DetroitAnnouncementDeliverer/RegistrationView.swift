@@ -53,11 +53,7 @@ struct RegistrationView: View {
                 }
             }
             .disabled(isShowingLinkToSettings)
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(.blue)
-                    .frame(width: 300, height: 40)
-            )
+            .buttonStyle(.primary)
             .opacity(isShowingLinkToSettings ? 0.5 : 1.0)
             .foregroundStyle(.background)
 

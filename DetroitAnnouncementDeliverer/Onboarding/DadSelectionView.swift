@@ -46,17 +46,9 @@ struct DadSelectionView: View {
             
             DadView()
             
-            Button(action: action) {
-                Text("Continue")
-                    .foregroundColor(.white)
-            }
-            
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(.blue)
-                    .frame(width: 300, height: 40)
-            )
-            .padding()
+            Button("Continue", action: action)
+                .buttonStyle(.primary)
+                .padding()
             
             Spacer()
         }

@@ -7,12 +7,19 @@
 
 import SwiftUI
 
-struct PrimaryButton: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+struct PrimaryButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.white)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(.blue)
+                    .frame(width: 300, height: 40)
+            )
     }
 }
 
-#Preview {
-    PrimaryButton()
+extension ButtonStyle where Self == PrimaryButton {
+    @MainActor static var primary: PrimaryButton { PrimaryButton() }
 }
