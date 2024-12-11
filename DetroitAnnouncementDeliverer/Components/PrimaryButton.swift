@@ -11,10 +11,10 @@ import SwiftUI
 struct PrimaryButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(.blue)
+                    .foregroundStyle(.accent)
                     .frame(width: 300, height: 40)
             )
     }

@@ -14,7 +14,7 @@ struct OnboardingInformationRow: View {
         HStack {
             Image(systemName: data.imageName)
                 .font(.largeTitle)
-                .foregroundColor(data.imageColor)
+                .foregroundStyle(data.imageColor)
                 .padding(.trailing, 5)
             
             VStack(alignment: .leading) {
@@ -23,9 +23,8 @@ struct OnboardingInformationRow: View {
                     .padding(.bottom, 5)
                 
                 Text(data.description)
-                    .font(.body
-                    )
-                    .foregroundColor(.secondary)
+                    .font(.body)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding()
@@ -33,5 +32,5 @@ struct OnboardingInformationRow: View {
 }
 
 #Preview {
-    OnboardingInformationRow(data: OnbardingInformationRowData(imageName: "bell.badge", imageColor: .blue, title: "Get Notified", description: "Get notified on your Academy devices when activities are starting, so you’re not the one left saying, 'Wait, what time does this start?'"))
+    OnboardingInformationRow(data: OnbardingInformationRowData(imageName: "bell.badge", imageColor: .accent, title: "Get Notified", description: "Get notified on your Academy devices when activities are starting, so you’re not the one left saying, 'Wait, what time does this start?'"))
 }

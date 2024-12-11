@@ -10,6 +10,7 @@ import SwiftUI
 struct AppTitleView: View {
     var body: some View {
         Text("Detroit Announcement Deliverer")
+            .foregroundStyle(.accent)
             .font(.largeTitle)
             .bold()
     }
