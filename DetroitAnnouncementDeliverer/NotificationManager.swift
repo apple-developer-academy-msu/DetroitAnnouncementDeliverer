@@ -25,17 +25,14 @@ class NotificationManager: NSObject, ObservableObject {
 
 extension NotificationManager: UNUserNotificationCenterDelegate {
 
+    @MainActor
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        await MainActor.run {
-            notificationSubject.send(response.notification)
-        }
+        notificationSubject.send(response.notification)
     }
     
+    @MainActor
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        await MainActor.run {
-            notificationSubject.send(notification)
-        }
-        
+        notificationSubject.send(notification)
         return [.badge, .banner, .list, .sound]
     }
 }
