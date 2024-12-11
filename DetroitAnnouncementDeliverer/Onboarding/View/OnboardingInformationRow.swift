@@ -32,15 +32,6 @@ struct OnboardingInformationRow: View {
     }
 }
 
-
-struct OnbardingInformationRowData: Identifiable {
-    var id = UUID()
-    var imageName: String
-    var imageColor: Color
-    var title: String
-    var description: String
-}
-
 #Preview {
     OnboardingInformationRow(data: OnbardingInformationRowData(imageName: "bell.badge", imageColor: .blue, title: "Get Notified", description: "Get notified on your Academy devices when activities are starting, so you’re not the one left saying, 'Wait, what time does this start?'"))
 }

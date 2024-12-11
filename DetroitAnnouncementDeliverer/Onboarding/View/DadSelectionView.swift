@@ -36,7 +36,7 @@ struct DadSelectionView: View {
             Text("Appearance")
                 .font(.headline)
             Picker("Select Your DAD", selection: $selectedDadIndex) {
-                ForEach(0..<Dad.list.count) { index in
+                ForEach(0..<Dad.list.count, id: \.self) { index in
                     Text(isOld ? Dad.list[index].oldEmoji : Dad.list[index].youngEmoji)
                         .tag(index)
                 }
