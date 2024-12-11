@@ -17,8 +17,6 @@ class DADAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     ) {
         print(error)
     }
-
-    
     
     func application(
         _ application: UIApplication,
@@ -33,12 +31,10 @@ class DADAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         print("received remote notification")
         
         if let urlString = userInfo["url"] as? String, let url = URL(string: urlString) {
-            // Open the URL in Safari or another app
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             completionHandler(.newData)
         }
         
         return completionHandler(.noData)
     }
-    
 }
