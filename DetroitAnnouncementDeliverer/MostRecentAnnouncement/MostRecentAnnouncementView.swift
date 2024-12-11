@@ -27,15 +27,9 @@ struct MostRecentAnnouncementView: View {
                     .padding()
                 
                 if let mostRecentURL = vm.storedURL {
-                    Link(destination: mostRecentURL) {
-                        Text(vm.mostRecentBody)
-                            .font(.title)
-                            .padding()
-                    }
+                    Link(destination: mostRecentURL, label: { message })
                 } else {
-                    Text(vm.mostRecentBody)
-                        .font(.title)
-                        .padding()
+                    message
                 }
                 
                 Spacer()
@@ -55,6 +49,12 @@ struct MostRecentAnnouncementView: View {
             .onReceive(notificationManager.notificationPublisher, perform: vm.handle)
             .padding()
         }
+    }
+    
+    var message: some View {
+        Text(vm.mostRecentBody)
+            .font(.title)
+            .padding()
     }
 }
 
