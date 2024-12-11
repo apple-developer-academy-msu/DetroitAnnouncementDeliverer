@@ -14,7 +14,7 @@ protocol RegistrationService {
 class VaporRegistrationService: RegistrationService {
     let endpoint: String
     
-    init(endpoint: String =  "http://10.121.53.206:8080/learners") {
+    init(endpoint: String =  VaporAPI.learners) {
         self.endpoint = endpoint
     }
     
