@@ -11,11 +11,11 @@ extension ImportantResourcesView {
     
     @Observable
     class ViewModel {
-        var resources = Resource.samples
+        var resources: [Resource] = []
+        var searchText = ""
         
         func fetchImportantResources() async throws {
-            print(VaporAPI.resources)
-                let baseURL = URL(string: VaporAPI.resources)!
+            let baseURL = URL(string: VaporAPI.resources)!
             let cohort = UserDefaults.standard.string(forKey: UserDefaults.cohort) ?? Cohort.am.rawValue
             var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
             urlComponents.queryItems = [
