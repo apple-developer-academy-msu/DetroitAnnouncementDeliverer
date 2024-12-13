@@ -29,6 +29,7 @@ extension ImportantResourcesView {
     class ViewModel: Searchable {
         var searchText = ""
         var sortType: SortType = .newest
+        var isLoading = true
         
         var searchResults: [Resource] {
             resources
@@ -44,12 +45,16 @@ extension ImportantResourcesView {
         }
         
         func fetchImportantResources() async throws {
+            isLoading = true
+            
             switch await resourceService.fetchResources() {
             case .success(let fetchedResources):
                 resources = fetchedResources
             case .failure(let failure):
                 break
             }
+            
+            isLoading = false
         }
     }
 }
