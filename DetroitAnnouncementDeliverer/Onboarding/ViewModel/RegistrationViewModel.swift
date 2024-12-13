@@ -22,7 +22,7 @@ extension RegistrationView {
             if isShowingLinkToSettings {
                 "Now listen, Sport. DAD needs your permission to send notifications to your devices for Academy announcements and resources. And yes, I mean DAD. Now, listen up—this is important! Think of it as me making sure you don’t miss out on anything important, with a little extra care and a dash of dad wisdom. Go ahead and head to your settings and turn on notifications. I’m looking out for you, and I promise it’ll be worth it."
             } else {
-                "DAD needs your permission to send notifications to your devices for Academy announcements and resources. Yep, you heard that right—DAD. Think of it like having a personal assistant who’s always got your back, but with extra love, a sprinkle of dad jokes, and a whole lot of helpful reminders and resources. Click 'Allow' and let’s stay connected!"
+                "DAD needs your permission to send notifications to your devices for Academy announcements and resources. Yep, you heard that right—DAD. Think of it like having a personal assistant who’s always got your back, but with extra love, a sprinkle of dad jokes, and a whole lot of helpful reminders and resources. Tap 'Allow' and let’s stay connected!"
             }
         }
         
