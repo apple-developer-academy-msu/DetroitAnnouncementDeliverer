@@ -7,31 +7,13 @@
 
 import SwiftUI
 
-extension ImportantResourcesView {
-    
-    @Observable
-    class ViewModel {
-        var resources: [Resource] = []
-        var searchText = ""
-        
-        func fetchImportantResources() async throws {
-            let baseURL = URL(string: VaporAPI.resources)!
-            let cohort = UserDefaults.standard.string(forKey: UserDefaults.cohort) ?? Cohort.am.rawValue
-            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
-            urlComponents.queryItems = [
-                URLQueryItem(name: "cohort", value: cohort)
-            ]
-            
-            if let url = urlComponents.url {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                resources = try JSONDecoder().decode([Resource].self, from: data)
-            }
-        }
-    }
-}
 struct ImportantResourcesView: View {
     @EnvironmentObject var notificationManager: NotificationManager
-    @State private var vm = ViewModel()
+    @State private var vm: ViewModel
+    
+    init(resourceService: ResourceService) {
+        self.vm = ViewModel(resourceService: resourceService)
+    }
     
     var body: some View {
         NavigationStack {
@@ -59,6 +41,12 @@ struct ImportantResourcesView: View {
     }
 }
 
+struct MockResourceService: ResourceService {
+    func fetchResources() async -> Result<[Resource], ResourceServiceError> {
+        .success(Resource.samples)
+    }
+}
+
 #Preview {
-    ImportantResourcesView()
+    ImportantResourcesView(resourceService: MockResourceService())
 }

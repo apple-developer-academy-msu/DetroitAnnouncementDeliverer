@@ -22,7 +22,7 @@ struct ContentView: View {
                 }
                 
                 Tab("Important Resources", systemImage: "sharedwithyou") {
-                    ImportantResourcesView()
+                    ImportantResourcesView(resourceService: VaporResourceService())
                 }
             }
         }
