@@ -26,19 +26,21 @@ extension ImportantResourcesView {
     }
     
     @Observable
-    class ViewModel {
+    class ViewModel: Searchable {
         var searchText = ""
         var sortType: SortType = .newest
+        
+        var searchResults: [Resource] {
+            resources
+                .filter { searchTextMatches($0.message) }
+                .sorted(by: sortType.sort)
+        }
         
         private var resources: [Resource] = []
         private let resourceService: ResourceService
         
         init(resourceService: ResourceService) {
             self.resourceService = resourceService
-        }
-        
-        var sortedResources: [Resource] {
-            resources.sorted(by: sortType.sort)
         }
         
         func fetchImportantResources() async throws {

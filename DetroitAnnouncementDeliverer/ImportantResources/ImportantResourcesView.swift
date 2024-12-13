@@ -18,14 +18,15 @@ struct ImportantResourcesView: View {
     var body: some View {
         NavigationStack {
             List {
-                if vm.sortedResources.isEmpty {
+                if vm.searchResults.isEmpty {
                     ContentUnavailableView("No saved resources", systemImage: "book.pages", description: Text("Resources mentors have marked as important will be persisted here."))
                 } else {
-                    ForEach(vm.sortedResources, content: ResourceRow.init)
+                    ForEach(vm.searchResults, content: ResourceRow.init)
                 }
             }
             .navigationTitle("Saved Resources")
             .navigationBarTitleTextColor(.accent)
+            .searchable(text: $vm.searchText)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     SortMenu(selectedSort: $vm.sortType)

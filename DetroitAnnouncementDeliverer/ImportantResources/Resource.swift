@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Resource: Identifiable {
+struct Resource: Identifiable, Hashable {
     let id: UUID
     let message: String
     let date: Date
