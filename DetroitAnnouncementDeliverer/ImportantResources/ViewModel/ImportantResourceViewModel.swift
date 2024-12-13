@@ -37,6 +37,14 @@ extension ImportantResourcesView {
                 .sorted(by: sortType.sort)
         }
         
+        var noContentDescription: String {
+            if searchText.count > mininumNumberOfSearchCharacters && searchResults.isEmpty {
+                "Try entering a different search"
+            } else {
+                "Resources mentors have marked as important will be shown here."
+            }
+        }
+        
         private var resources: [Resource] = []
         private let resourceService: ResourceService
         

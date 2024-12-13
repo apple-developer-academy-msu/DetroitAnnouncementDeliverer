@@ -60,7 +60,7 @@ extension MostRecentAnnouncementView {
         var isShowingDadSelection = false
         
         var headline: String {
-            mostRecentDate.isEmpty ? "Welcome to DAD!" : "On \(mostRecentDate) DAD Said ..."
+            mostRecentDate.isEmpty ? "Welcome to DAD!" : "On \(mostRecentDate) DAD Said..."
         }
         
         private let defaultHeadline = "Well, howdy sport! Your most recent message will be displayed here, so keep your eyes peeled! Just like DAD's famous sock collection, you won't want to miss it! Oh, and make sure your device is registered, or you might be left in the dark—and trust me, nobody wants that! Stay tuned, champ!"
