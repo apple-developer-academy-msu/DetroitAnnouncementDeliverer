@@ -30,6 +30,17 @@ extension ImportantResourcesView {
         var searchText = ""
         var sortType: SortType = .newest
         var isLoading = true
+        var error: ResourceServiceError? {
+            didSet {
+                if let error {
+                    isAlertShowing = true
+                } else {
+                    isAlertShowing = false
+                }
+            }
+        }
+        
+        var isAlertShowing: Bool = false
         
         var searchResults: [Resource] {
             resources
@@ -58,8 +69,9 @@ extension ImportantResourcesView {
             switch await resourceService.fetchResources() {
             case .success(let fetchedResources):
                 resources = fetchedResources
+                error = nil
             case .failure(let failure):
-                break
+                error = failure
             }
             
             isLoading = false

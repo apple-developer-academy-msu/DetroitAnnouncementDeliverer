@@ -11,8 +11,12 @@ protocol ResourceService {
     func fetchResources() async -> Result<[Resource], ResourceServiceError>
 }
 
-enum ResourceServiceError: Swift.Error {
+enum ResourceServiceError: Swift.Error, LocalizedError {
     case invalidURL, invalidData, decodingError
+    
+    var errorDescription: String? {
+        "Whoops, champ! Looks like DAD's having some trouble grabbing your resources. Give your internet a quick check and try again. I'll get it sorted!"
+    }
 }
 
 class VaporResourceService: ResourceService {

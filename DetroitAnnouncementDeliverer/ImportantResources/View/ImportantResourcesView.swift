@@ -19,12 +19,12 @@ struct ImportantResourcesView: View {
         NavigationStack {
             List {
                 if vm.searchResults.isEmpty {
-                    ContentUnavailableView("No saved resources", systemImage: "book.pages", description: Text("Resources mentors have marked as important will be persisted here."))
+                    ContentUnavailableView("No saved resources found", systemImage: "book.pages", description: Text(vm.noContentDescription))
                         .overlay {
                             if vm.isLoading {
                                 ProgressView()
                             }
-                        }
+                        }                    
                 } else {
                     ForEach(vm.searchResults, content: ResourceRow.init)
                 }
@@ -47,6 +47,12 @@ struct ImportantResourcesView: View {
             }
             .refreshable {
                 try? await vm.fetchImportantResources()
+            }
+            .alert(vm.error?.localizedDescription ?? "Sorry, Champ!", isPresented: $vm.isAlertShowing) {
+                Button("Ok", role: .cancel) {}
+                Button("Try Again") {
+                    Task { try await vm.fetchImportantResources() }
+                }
             }
         }
     }
