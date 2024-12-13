@@ -18,14 +18,19 @@ struct ImportantResourcesView: View {
     var body: some View {
         NavigationStack {
             List {
-                if vm.resources.isEmpty {
+                if vm.sortedResources.isEmpty {
                     ContentUnavailableView("No saved resources", systemImage: "book.pages", description: Text("Resources mentors have marked as important will be persisted here."))
                 } else {
-                    ForEach(vm.resources, content: ResourceRow.init)
+                    ForEach(vm.sortedResources, content: ResourceRow.init)
                 }
             }
             .navigationTitle("Saved Resources")
             .navigationBarTitleTextColor(.accent)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    SortMenu(selectedSort: $vm.sortType)
+                }
+            }
             .task {
                 try? await vm.fetchImportantResources()
             }
@@ -49,4 +54,5 @@ struct MockResourceService: ResourceService {
 
 #Preview {
     ImportantResourcesView(resourceService: MockResourceService())
+        .environmentObject(NotificationManager())
 }
