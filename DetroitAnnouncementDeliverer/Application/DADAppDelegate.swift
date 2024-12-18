@@ -7,10 +7,11 @@
 
 import SwiftUI
 import UserNotifications
+import Combine
 
 class DADAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     var registrationService: RegistrationService?
-    
+
     func application(
         _ application: UIApplication,
         didFailToRegisterForRemoteNotificationsWithError error: any Error

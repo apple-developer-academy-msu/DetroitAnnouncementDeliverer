@@ -48,7 +48,6 @@ struct RegistrationView: View {
             .buttonStyle(.primary)
             .opacity(vm.isShowingLinkToSettings ? 0.5 : 1.0)
             .foregroundStyle(.background)
-
             .padding()
             
             if vm.isShowingLinkToSettings {
@@ -58,11 +57,21 @@ struct RegistrationView: View {
                 .padding()
             }
             
+            if vm.isLoading {
+                ProgressView()
+            }
+            
             Spacer()
         }
         .onAppear(perform: checkAuthorization)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             checkAuthorization()
+        }
+        .alert(vm.error?.localizedDescription ?? "Sorry, Champ!", isPresented: $vm.isAlertShowing) {
+            Button("Ok", role: .cancel) {}
+            Button("Try Again") {
+                Task { await vm.register() }
+            }
         }
     }
     

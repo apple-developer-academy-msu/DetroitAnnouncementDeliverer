@@ -12,10 +12,13 @@ extension RegistrationView {
     @Observable
     class ViewModel {
         var isShowingLinkToSettings = false
-        let onRegistraion: () -> Void
+        let onRegistration: () -> Void
+        var error: Error?
+        var isAlertShowing = false
+        var isLoading = false
         
         init(onRegistraion: @escaping () -> Void) {
-            self.onRegistraion = onRegistraion
+            self.onRegistration = onRegistraion
         }
         
         var instructions: String {
@@ -27,19 +30,24 @@ extension RegistrationView {
         }
         
         func register() async {
+            isLoading = true
             await registerForRemoteNotifications()
-            onRegistraion()
+            
+            if error == nil {
+                onRegistration()
+            }
         }
         
         @MainActor
-        func registerForRemoteNotifications() async {
+        private func registerForRemoteNotifications() async {
             let notificationCenter = UNUserNotificationCenter.current()
             
             do {
                 try await notificationCenter.requestAuthorization(options: [.alert, .badge, .sound])
                 UIApplication.shared.registerForRemoteNotifications()
             } catch {
-                print("Request authorization error")
+                self.error = error
+                isAlertShowing = true
             }
         }
         
