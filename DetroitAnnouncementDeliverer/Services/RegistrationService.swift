@@ -11,14 +11,21 @@ protocol RegistrationService {
     func sendDeviceTokenToServer(deviceToken: String)
     var isRegistered: Bool { get }
     var onSuccess: (() -> Void)? { get set }
-    var onError: ((Error) -> Void)? { get set }
+    var onError: ((RegistrationServiceError) -> Void)? { get set }
     func checkRegistration() async
 }
 
+enum RegistrationServiceError: Swift.Error, LocalizedError {
+    case unableToRegister
+    
+    var errorDescription: String? {
+        "Whoops, champ! Looks like DAD's having some trouble registering your device for notifications. Give your internet a quick check and try again. I'll get it sorted!"
+    }
+}
 
 class VaporRegistrationService: RegistrationService {
     var onSuccess: (() -> Void)?
-    var onError: ((Error) -> Void)?
+    var onError: ((RegistrationServiceError) -> Void)?
     
     private(set) var isRegistered = false
     
@@ -54,7 +61,7 @@ class VaporRegistrationService: RegistrationService {
             send(request)
         } catch {
             print("Error serializing JSON: \(error)")
-            onError?(error)
+            onError?(.unableToRegister)
         }
     }
     
@@ -86,8 +93,8 @@ class VaporRegistrationService: RegistrationService {
     
     private func send(_ request: URLRequest) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                self.onError?(error)
+            if let _ = error {
+                self.onError?(.unableToRegister)
                 return
             }
             

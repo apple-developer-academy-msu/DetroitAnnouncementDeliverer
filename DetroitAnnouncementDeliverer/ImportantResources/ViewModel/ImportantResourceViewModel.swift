@@ -16,7 +16,7 @@ extension ImportantResourcesView {
         var isLoading = true
         var error: ResourceServiceError? {
             didSet {
-                if let error {
+                if error != nil {
                     isAlertShowing = true
                 } else {
                     isAlertShowing = false

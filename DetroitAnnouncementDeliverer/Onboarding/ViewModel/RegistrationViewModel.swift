@@ -16,7 +16,7 @@ extension RegistrationView {
         var isShowingLinkToSettings = false
         var error: Error? {
             didSet {
-                if let error {
+                if error != nil {
                     isAlertShowing = true
                 } else {
                     isAlertShowing = false
