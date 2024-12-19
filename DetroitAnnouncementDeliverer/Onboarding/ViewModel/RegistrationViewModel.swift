@@ -18,7 +18,7 @@ extension RegistrationView {
         var isAlertShowing = false
         var isLoading = false
         
-        init(onRegistration: @escaping () -> Void, service: RegistrationService) {
+        init(service: RegistrationService, onRegistration: @escaping () -> Void) {
             self.onRegistration = onRegistration
             self.service = service
             self.isRegistered = service.isRegistered

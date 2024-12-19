@@ -19,7 +19,7 @@ struct ContentView: View {
         } else {
             TabView {
                 Tab("Most Recent", systemImage: "bell.badge") {
-                    MostRecentAnnouncementView( registrationService: registrationService)
+                    MostRecentAnnouncementView(registrationService: registrationService)
                 }
                 
                 Tab("Important Resources", systemImage: "sharedwithyou") {

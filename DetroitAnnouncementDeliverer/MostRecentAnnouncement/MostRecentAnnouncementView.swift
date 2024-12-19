@@ -50,9 +50,9 @@ struct MostRecentAnnouncementView: View {
                     }
                 }
                 .sheet(isPresented: $vm.isShowingRegistration) {
-                    RegistrationView(onRegistration: {
+                    RegistrationView(service: registrationService) {
                         vm.isShowingRegistration = false
-                    }, service: registrationService)
+                    }
                 }
                 .onReceive(notificationManager.notificationPublisher, perform: vm.handle)
                 .padding()

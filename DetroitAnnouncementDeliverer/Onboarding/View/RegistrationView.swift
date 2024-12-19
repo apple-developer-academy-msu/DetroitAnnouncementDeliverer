@@ -12,8 +12,8 @@ struct RegistrationView: View {
     @AppStorage("cohort") private var cohort = Cohort.am.rawValue
     @State private var vm: ViewModel
     
-    init(onRegistration: @escaping () -> Void, service: RegistrationService) {
-        self.vm = ViewModel(onRegistration: onRegistration, service: service)
+    init(service: RegistrationService, onRegistration: @escaping () -> Void) {
+        self.vm = ViewModel(service: service, onRegistration: onRegistration)
     }
     
     var body: some View {
@@ -101,7 +101,5 @@ struct RegistrationView: View {
 }
 
 #Preview {
-    RegistrationView(onRegistration: {
-        
-    }, service: VaporRegistrationService())
+    RegistrationView(service: VaporRegistrationService()) {}
 }

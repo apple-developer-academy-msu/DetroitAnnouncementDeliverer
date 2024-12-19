@@ -66,11 +66,15 @@ struct MockResourceService: ResourceService {
     }
     
     func fetchResources() async -> Result<[Resource], ResourceServiceError> {
-        .success(Resource.samples)
+        if isSuccess {
+            .success(Resource.samples)
+        } else {
+            .failure(.decodingError)
+        }
     }
 }
 
 #Preview {
-    ImportantResourcesView(resourceService: MockResourceService())
+    ImportantResourcesView(resourceService: MockResourceService(isSuccess: true))
         .environmentObject(NotificationManager())
 }

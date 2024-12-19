@@ -29,18 +29,12 @@ struct OnboardingView: View {
             }
             .tag(1)
             
-            RegistrationView(onRegistration: {
+            RegistrationView(service: registrationService) {
                 withAnimation {
                     isFirstTime = false
                 }
-            }, service: registrationService)
+            }
             .tag(2)
-            
-            RegistrationView(onRegistration: {
-                withAnimation {
-                    isFirstTime = false
-                }
-            }, service: registrationService)
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
     }
