@@ -82,6 +82,10 @@ struct RegistrationView: View {
         .task { await vm.checkRegistration() }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             checkAuthorization()
+            
+            Task {
+                await vm.checkRegistration()
+            }
         }
         .alert(vm.error?.localizedDescription ?? "Sorry, Champ!", isPresented: $vm.isAlertShowing) {
             Button("Ok", role: .cancel) {}
