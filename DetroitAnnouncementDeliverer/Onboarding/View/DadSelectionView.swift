@@ -25,10 +25,15 @@ struct DadSelectionView: View {
             
             HStack {
                 Text("Younger")
+                    .accessibilityHidden(true)
+                
                 Toggle("Is Old", isOn: $isOld)
+                    .accessibilityHint(Text("Toggle on to make your dad older. Toggle off to make your dad younger."))
                     .labelsHidden()
                     .padding()
+                
                 Text("Older")
+                    .accessibilityHidden(true)
 
             }
             
@@ -42,6 +47,7 @@ struct DadSelectionView: View {
                         .tag(index)
                 }
             }
+            
             .pickerStyle(.segmented)
             .padding()
             

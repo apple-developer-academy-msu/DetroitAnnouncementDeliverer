@@ -16,6 +16,7 @@ struct OnboardingInformationRow: View {
                 .font(.largeTitle)
                 .foregroundStyle(data.imageColor)
                 .padding(.trailing, 5)
+                .accessibilityHidden(true)
             
             VStack(alignment: .leading) {
                 Text(data.title)

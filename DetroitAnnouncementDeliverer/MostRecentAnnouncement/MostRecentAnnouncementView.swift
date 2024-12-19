@@ -22,6 +22,7 @@ struct MostRecentAnnouncementView: View {
                     DadView()
                         .padding()
                 }
+                .accessibilityLabel(Text("Tap to edit your selected dad"))
                 
                 Text(vm.headline)
                     .font(.headline)

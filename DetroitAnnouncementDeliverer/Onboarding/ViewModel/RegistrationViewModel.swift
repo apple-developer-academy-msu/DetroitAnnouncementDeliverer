@@ -44,22 +44,20 @@ extension RegistrationView {
         var isRegistered: Bool
         
         func register() async {
+            service.onSuccess = onRegistration
+
             service.onError = {
                 self.error = $0
                 self.isLoading = false
             }
             
-            service.onSuccess = onRegistration
-            
             isLoading = true
             await registerForRemoteNotifications()
             await checkRegistration()
-            isRegistered = service.isRegistered
         }
         
         func checkRegistration() async {
             await service.checkRegistration()
-            isRegistered = service.isRegistered
         }
         
         @MainActor
@@ -97,5 +95,4 @@ extension RegistrationView {
             }
         }
     }
-    
 }

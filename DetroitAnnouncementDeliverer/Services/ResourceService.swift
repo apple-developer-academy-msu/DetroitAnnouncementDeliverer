@@ -36,6 +36,4 @@ class VaporResourceService: ResourceService {
         
         return .success(resources)
     }
-    
-    
 }

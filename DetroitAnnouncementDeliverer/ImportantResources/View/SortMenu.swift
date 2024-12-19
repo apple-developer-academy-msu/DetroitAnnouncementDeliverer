@@ -24,6 +24,7 @@ extension ImportantResourcesView {
                                 Image(systemName: "checkmark.circle")
                             }
                         }
+                        .accessibilityLabel(Text("\(sortType.rawValue)"))
                     }
                 }
             } label: {
