@@ -34,9 +34,9 @@ extension ImportantResourcesView {
         
         var noContentDescription: String {
             if searchText.count > mininumNumberOfSearchCharacters && searchResults.isEmpty {
-                "Try entering a different search"
+                "How about giving a different search a try, champ? Might find something better that way!"
             } else {
-                "Resources mentors have marked as important will be shown here."
+                "This is where you'll find the stuff that mentors think is really important. Think of it as their personal shortlist of the best stuff to check out!"
             }
         }
         
