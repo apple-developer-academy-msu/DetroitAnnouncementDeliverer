@@ -12,8 +12,6 @@ struct DadSelectionView: View {
     @AppStorage("isOld") var isOld = false
     
     let action: () -> Void
-    
-    
 
     var body: some View {
         VStack {

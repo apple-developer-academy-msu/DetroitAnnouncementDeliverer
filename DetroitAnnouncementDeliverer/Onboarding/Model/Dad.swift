@@ -17,7 +17,7 @@ extension Dad {
     static let list = [
         Dad(youngEmoji: "👨", oldEmoji: "👴"),
         Dad(youngEmoji: "👨🏻", oldEmoji: "👴🏻"),
-        Dad(youngEmoji: "👨🏼", oldEmoji: "👴🏻"),
+        Dad(youngEmoji: "👨🏼", oldEmoji: "👴🏼"),
         Dad(youngEmoji: "👨🏽", oldEmoji: "👴🏽"),
         Dad(youngEmoji: "👨🏾", oldEmoji: "👴🏾"),
         Dad(youngEmoji: "👨🏿", oldEmoji: "👴🏿")
