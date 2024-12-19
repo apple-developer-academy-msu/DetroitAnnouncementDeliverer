@@ -31,14 +31,13 @@ extension Resource: Decodable {
         self.id = try container.decode(UUID.self, forKey: .id)
         self.message = try container.decode(String.self, forKey: .message)
         let dateString = try container.decode(String.self, forKey: .date)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                 
-        if let date = formatter.date(from: dateString) {
-                    self.date = date
-                } else {
-                    throw DecodingError.dataCorruptedError(forKey: .date, in: container, debugDescription: "Invalid date format")
-                }
+        if let date = ISO8601DateFormatter().date(from: dateString) {
+            self.date = date
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .date, in: container, debugDescription: "Invalid date format")
+        }
+        
         self.url = try container.decode(URL.self, forKey: .url)
     }
 }
