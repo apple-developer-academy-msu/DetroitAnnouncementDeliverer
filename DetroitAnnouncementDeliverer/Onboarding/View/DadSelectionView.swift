@@ -20,7 +20,8 @@ struct DadSelectionView: View {
                 .padding()
             
             Text("Age")
-                .font(.headline)
+                .font(.title2)
+                .bold()
             
             HStack {
                 Text("Younger")
@@ -32,7 +33,9 @@ struct DadSelectionView: View {
             }
             
             Text("Appearance")
-                .font(.headline)
+                .font(.title2)
+                .bold()
+
             Picker("Select Your DAD", selection: $selectedDadIndex) {
                 ForEach(0..<Dad.list.count, id: \.self) { index in
                     Text(isOld ? Dad.list[index].oldEmoji : Dad.list[index].youngEmoji)
