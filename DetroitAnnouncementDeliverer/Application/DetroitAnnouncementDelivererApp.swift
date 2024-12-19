@@ -11,13 +11,14 @@ import SwiftUI
 struct DetroitAnnouncementDelivererApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: DADAppDelegate
     @StateObject var notificationManager = NotificationManager()
+    let registrationService: RegistrationService = VaporRegistrationService()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(registrationService: registrationService)
                 .environmentObject(notificationManager)
                 .onAppear {
-                    appDelegate.registrationService = VaporRegistrationService()
+                    appDelegate.registrationService = registrationService
                 }
         }
     }

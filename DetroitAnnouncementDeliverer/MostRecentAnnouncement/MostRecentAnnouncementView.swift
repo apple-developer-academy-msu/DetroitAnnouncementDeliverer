@@ -11,6 +11,7 @@ import UserNotifications
 struct MostRecentAnnouncementView: View {
     @State private var vm = ViewModel()
     @EnvironmentObject var notificationManager: NotificationManager
+    let registrationService: RegistrationService
     
     var body: some View {
         NavigationStack {
@@ -49,9 +50,9 @@ struct MostRecentAnnouncementView: View {
                     }
                 }
                 .sheet(isPresented: $vm.isShowingRegistration) {
-                    RegistrationView() {
+                    RegistrationView(onRegistration: {
                         vm.isShowingRegistration = false
-                    }
+                    }, service: registrationService)
                 }
                 .onReceive(notificationManager.notificationPublisher, perform: vm.handle)
                 .padding()
@@ -67,5 +68,5 @@ struct MostRecentAnnouncementView: View {
 }
 
 #Preview {
-    MostRecentAnnouncementView()
+    MostRecentAnnouncementView( registrationService: VaporRegistrationService())
 }

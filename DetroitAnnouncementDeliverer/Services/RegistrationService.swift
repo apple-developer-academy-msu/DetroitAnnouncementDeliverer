@@ -9,15 +9,43 @@ import Foundation
 
 protocol RegistrationService {
     func sendDeviceTokenToServer(deviceToken: String)
+    var isRegistered: Bool { get }
+    var onSuccess: (() -> Void)? { get set }
+    var onError: ((Error) -> Void)? { get set }
+    func checkRegistration() async
 }
 
+
 class VaporRegistrationService: RegistrationService {
-    let endpoint: String
+    var onSuccess: (() -> Void)?
+    var onError: ((Error) -> Void)?
+    
+    private(set) var isRegistered = false
+    
+    private let endpoint: String
     
     init(endpoint: String =  VaporAPI.learners) {
         self.endpoint = endpoint
     }
     
+    func checkRegistration() async {
+        guard let url = URL(string: "\(VaporAPI.learners)/\(userID())") else {
+            isRegistered = false
+                return
+        }
+        
+        do {
+            let (_, response) = try await URLSession.shared.data(from: url)
+            if let httpResponse = response as? HTTPURLResponse {
+                isRegistered = httpResponse.statusCode == 200
+            } else {
+                isRegistered = false
+            }
+        } catch {
+            isRegistered = false
+        }
+    }
+
     func sendDeviceTokenToServer(deviceToken: String) {
         let body: [String: Any] = createBody(with: deviceToken)
 
@@ -26,7 +54,7 @@ class VaporRegistrationService: RegistrationService {
             send(request)
         } catch {
             print("Error serializing JSON: \(error)")
-            return
+            onError?(error)
         }
     }
     
@@ -59,12 +87,13 @@ class VaporRegistrationService: RegistrationService {
     private func send(_ request: URLRequest) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error sending device token: \(error)")
+                self.onError?(error)
                 return
             }
             
             if let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 print("Device token successfully registered.")
+                self.onSuccess?()
             } else {
                 print("Failed to register device token with response: \(String(describing: response))")
             }

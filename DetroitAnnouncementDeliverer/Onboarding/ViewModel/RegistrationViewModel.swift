@@ -11,14 +11,17 @@ extension RegistrationView {
     
     @Observable
     class ViewModel {
-        var isShowingLinkToSettings = false
         let onRegistration: () -> Void
+        var service: RegistrationService
+        var isShowingLinkToSettings = false
         var error: Error?
         var isAlertShowing = false
         var isLoading = false
         
-        init(onRegistraion: @escaping () -> Void) {
-            self.onRegistration = onRegistraion
+        init(onRegistration: @escaping () -> Void, service: RegistrationService) {
+            self.onRegistration = onRegistration
+            self.service = service
+            self.isRegistered = service.isRegistered
         }
         
         var instructions: String {
@@ -29,13 +32,26 @@ extension RegistrationView {
             }
         }
         
+        var isRegistered: Bool
+        
         func register() async {
+            service.onError = {
+                self.error = $0
+                self.isAlertShowing = true
+                self.isLoading = false
+            }
+            
+            service.onSuccess = onRegistration
+            
             isLoading = true
             await registerForRemoteNotifications()
-            
-            if error == nil {
-                onRegistration()
-            }
+            await checkRegistration()
+            isRegistered = service.isRegistered
+        }
+        
+        func checkRegistration() async {
+            await service.checkRegistration()
+            isRegistered = service.isRegistered
         }
         
         @MainActor

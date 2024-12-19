@@ -7,7 +7,6 @@
 
 import SwiftUI
 import UserNotifications
-import Combine
 
 class DADAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     var registrationService: RegistrationService?

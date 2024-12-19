@@ -11,14 +11,15 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("isFirstTime") private var isFirstTime = true
+    let registrationService: RegistrationService
 
     var body: some View {
         if isFirstTime {
-            OnboardingView()
+            OnboardingView(registrationService: registrationService)
         } else {
             TabView {
                 Tab("Most Recent", systemImage: "bell.badge") {
-                    MostRecentAnnouncementView()
+                    MostRecentAnnouncementView( registrationService: registrationService)
                 }
                 
                 Tab("Important Resources", systemImage: "sharedwithyou") {
@@ -30,5 +31,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(registrationService: VaporRegistrationService())
 }

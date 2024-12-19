@@ -11,6 +11,8 @@ struct OnboardingView: View {
     @AppStorage("isFirstTime") private var isFirstTime = true
     @State private var selectedTab = 0
     
+    let registrationService: RegistrationService
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             OverviewView() {
@@ -27,17 +29,23 @@ struct OnboardingView: View {
             }
             .tag(1)
             
-            RegistrationView() {
+            RegistrationView(onRegistration: {
                 withAnimation {
                     isFirstTime = false
                 }
-            }
+            }, service: registrationService)
             .tag(2)
+            
+            RegistrationView(onRegistration: {
+                withAnimation {
+                    isFirstTime = false
+                }
+            }, service: registrationService)
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
     }
 }
 
 #Preview {
-    OnboardingView()
+    OnboardingView(registrationService: VaporRegistrationService())
 }
