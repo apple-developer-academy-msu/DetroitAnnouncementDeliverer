@@ -14,7 +14,16 @@ extension RegistrationView {
         let onRegistration: () -> Void
         var service: RegistrationService
         var isShowingLinkToSettings = false
-        var error: Error?
+        var error: Error? {
+            didSet {
+                if let error {
+                    isAlertShowing = true
+                } else {
+                    isAlertShowing = false
+                }
+            }
+        }
+        
         var isAlertShowing = false
         var isLoading = false
         
@@ -37,7 +46,6 @@ extension RegistrationView {
         func register() async {
             service.onError = {
                 self.error = $0
-                self.isAlertShowing = true
                 self.isLoading = false
             }
             
@@ -63,7 +71,6 @@ extension RegistrationView {
                 UIApplication.shared.registerForRemoteNotifications()
             } catch {
                 self.error = error
-                isAlertShowing = true
             }
         }
         
