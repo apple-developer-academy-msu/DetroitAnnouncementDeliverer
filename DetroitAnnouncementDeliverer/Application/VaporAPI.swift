@@ -8,7 +8,7 @@
 import Foundation
 
 enum VaporAPI {
-    static let baseURL = "http://10.121.53.206:8080"
+    static let baseURL = "http://138.197.40.147:8080"
     static var resources: String { "\(VaporAPI.baseURL)/\(VaporAPI.Endpoint.resources)" }
     static var learners: String { "\(VaporAPI.baseURL)/\(VaporAPI.Endpoint.learners)" }
     
