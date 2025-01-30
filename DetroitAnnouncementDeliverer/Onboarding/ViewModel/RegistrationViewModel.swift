@@ -58,6 +58,7 @@ extension RegistrationView {
         
         func checkRegistration() async {
             await service.checkRegistration()
+            isRegistered = service.isRegistered
         }
         
         @MainActor

@@ -69,6 +69,9 @@ struct RegistrationView: View {
                 Button("Open App Settings to Turn On Notifications") {
                     vm.openAppSettings()
                 }
+                .task {
+                    await vm.register()
+                }
                 .padding()
             }
             
