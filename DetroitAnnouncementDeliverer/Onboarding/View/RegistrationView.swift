@@ -70,7 +70,9 @@ struct RegistrationView: View {
                     vm.openAppSettings()
                 }
                 .task {
-                    await vm.register()
+                    if ProcessInfo.processInfo.isMacCatalystApp || ProcessInfo.processInfo.isiOSAppOnMac {
+                        await vm.register()
+                    }
                 }
                 .padding()
             }

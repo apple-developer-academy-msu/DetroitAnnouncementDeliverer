@@ -18,6 +18,8 @@ struct ResourceRow: View {
                     .foregroundStyle(.secondary)
                 Text(resource.message)
                     .font(.headline)
+                Text(resource.url.description)
+                
             }
         }
     }

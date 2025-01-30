@@ -408,7 +408,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DetroitAnnouncementDeliverer/DetroitAnnouncementDeliverer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"DetroitAnnouncementDeliverer/Preview Content\"";
 				DEVELOPMENT_TEAM = G7N636Y3VC;
 				ENABLE_PREVIEWS = YES;
@@ -440,7 +440,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DetroitAnnouncementDeliverer/DetroitAnnouncementDeliverer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"DetroitAnnouncementDeliverer/Preview Content\"";
 				DEVELOPMENT_TEAM = G7N636Y3VC;
 				ENABLE_PREVIEWS = YES;
